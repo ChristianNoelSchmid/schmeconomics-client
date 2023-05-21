@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+    background-color: #fafafa;
+    position: relative;
+    min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.hidden {
+  display: none;
+}
