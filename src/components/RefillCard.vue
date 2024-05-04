@@ -6,8 +6,8 @@
     });
 </script>
 <template>
-    <div class="card d-flex flex-row justify-content-around align-items-center">
-        <div>
+    <div class="card d-flex flex-row justify-content-around">
+        <div class="card-det">
             <h3>{{ props.cat_name }}</h3>
             <span>Refill ${{ props.refill_val / 100 }}</span>
         </div>
@@ -19,8 +19,14 @@
 </template>
 <style scoped>
     .card {
+        width: 100%;
+        text-align: left;
         border-bottom: solid 1px #fefefe;
         padding: 2em 0;
+    }
+    .card-det {
+        width: 50%;
+        text-align: left;
     }
     .card:last-child {
         border-bottom: none;

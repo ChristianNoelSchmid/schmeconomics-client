@@ -22,7 +22,7 @@
 <style scoped>
     .background {
         background-color: #fffa;
-        z-index: 2;
+        z-index: 11;
         position: absolute;
         top: 0; left: 0;
         width: 100%;
@@ -31,13 +31,13 @@
     .dialog {
         box-shadow: 0px 0px 7px 0px #0003; 
         background-color: #fff;
-        top: 5%;
+        top: 12.5%;
         left: 5%;
         border: solid 1px #eee;
         z-index: 3;
         position: fixed;
         width: 90%;
-        height: 90vh;
+        height: 75vh;
     }
     
     .content {

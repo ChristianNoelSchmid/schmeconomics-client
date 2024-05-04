@@ -4,9 +4,8 @@ async function get_route(intermediate_route) {
     const auth = use_auth_store();
     if(!auth.logged_in) { return null; }
 
-    const url = `https://schmeconomics.christianssoftware.com:5010/${intermediate_route}?` +
-        `user-id=${auth.user_id}&` +
-        `api-key=${auth.api_key}`;
+    const url = `https://schmeconomics.christianssoftware.com:8000/` + 
+        `${intermediate_route}?`+ `user-id=${auth.user_id}&` + `api-key=${auth.api_key}`;
 
     const res = await fetch(url);
     if(res.status >= 400) { return null }
@@ -17,7 +16,7 @@ async function post_route(intermediate_route, body) {
     const auth = use_auth_store();
     if(!auth.logged_in) { return null; }
 
-    const url = `https://schmeconomics.christianssoftware.com:5010/${intermediate_route}?` +
+    const url = `https://schmeconomics.christianssoftware.com:8000/${intermediate_route}?`+
         `user-id=${auth.user_id}&` +
         `api-key=${auth.api_key}`;
 
@@ -53,8 +52,8 @@ async function get_categories() {
  * @param {*} isAdd 
  * @param {*} cat 
  */
-async function post_transaction(cat_id, am, notes) {
-    return await post_route("transaction", JSON.stringify({ cat_id, am, notes }));
+async function post_transaction(currency, cat_id, am, notes) {
+    return await post_route("transaction", JSON.stringify({ currency, cat_id, am, notes }));
 }
 
 /**

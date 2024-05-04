@@ -10,8 +10,8 @@
     const transact_fmt = computed(() => {
         const t_stamp = new Date(props.transact.t_stamp * 1000);
         const date = 
-            t_stamp.getMonth().toString() + "/" +
-            t_stamp.getDate().toString() + "/" +
+            (t_stamp.getMonth() + 1).toString() + "/" +
+            t_stamp.getDate().toString().padStart(2, "0") + "/" +
             t_stamp.getFullYear().toString() + ", " +
             t_stamp.getHours().toString().padStart(2, '0') + ":" +
             t_stamp.getMinutes().toString().padStart(2, '0');
@@ -24,9 +24,9 @@
 
         const am = props.transact.am;
         const is_refill = props.transact.is_refill;
-        const notes = props.transact.notes;
+        const note = props.transact.note;
 
-        return { date, name: user_name, am, is_refill, notes, cat_name }
+        return { date, name: user_name, am, is_refill, note, cat_name }
     });
 </script>
 <template>
@@ -38,7 +38,7 @@
         <div class="col-6 d-flex flex-column">
             <p>{{ transact_fmt.name }}</p>
         </div>
-        <p>{{ transact.is_refill ? "Refill" : transact_fmt.notes }}</p>
+        <p>{{ transact.is_refill ? "Refill" : transact_fmt.note }}</p>
     </div>
 </template>
 <style>

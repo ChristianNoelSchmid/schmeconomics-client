@@ -7,6 +7,7 @@
 
     import Dialog from "../components/Dialog.vue";
     import CategoryCard from "../components/CategoryCard.vue";
+import router from "../router";
 
     const state = use_state_store();
     const auth = use_auth_store();
@@ -14,11 +15,13 @@
 
     const transact_active = ref(false);
     const transact_state = reactive({
+        cur_type: "USD",
         cat: undefined,
         is_add: true,
         am: "",
         notes: ""
     });
+    const logger = computed(() => console);
     const transact_fmt = computed(() => ({
         cat_name: transact_state.cat?.cat_name,
         action: transact_state.is_add ? "Add to" : "Subtract from"
@@ -29,6 +32,8 @@
             app.is_loading = true; 
             await state.load_state();
             app.is_loading = false;
+        } else {
+            router.push("/sign-in");
         }
     });
 
@@ -37,6 +42,7 @@
         transact_state.is_add = is_add;
         transact_state.am = "0.00";
         transact_state.notes = "";
+        transact_state.cur_type = "USD";
 
         transact_active.value = true;
     }
@@ -47,7 +53,7 @@
             if(!transact_state.is_add) am = "-" + am;
 
             const res = await post_transaction(
-                transact_state.cat.id, am, transact_state.notes
+                transact_state.cur_type, transact_state.cat.id, am, transact_state.notes
             );
 
             if(res !== null) {
@@ -58,7 +64,7 @@
     }
     const format_currency_input = (event) => {
         let newString = "";
-        for(let char of event.target.value) {
+        for(let char of transact_state.am) {
             if(accept_currency_vals.includes(char)) {
                 newString += char;
             }
@@ -74,7 +80,7 @@
             + "." 
             + newString.substring(newString.length - 2);
 
-        event.target.value = newString;
+        transact_state.am = newString;
     }
 </script>
 <template>
@@ -92,11 +98,10 @@
         <form>
             <div class="form-row mb-4">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            $
-                        </div>
-                    </div>
+                    <select class="cur-select" v-model="transact_state.cur_type">
+                        <option value="USD" selected>$</option>
+                        <option value="EUR">€</option>
+                    </select>
                     <input 
                         v-model="transact_state.am" 
                         inputmode="numeric"
@@ -114,6 +119,7 @@
                     </div>
                     <input 
                         v-model="transact_state.notes" 
+                        @input="format_currency_input"
                         class="form-control" 
                         name="notes" 
                         type="text" />
@@ -123,4 +129,8 @@
     </Dialog>
 </template>
 <style scoped>
+.cur-select {
+    width: 4em;
+    text-align: center;
+}
 </style>

@@ -7,12 +7,12 @@
     });
 </script>
 <template>
-    <div class="card row align-items-center">
-        <div class="col-6">
+    <div class="card d-flex flex-row justify-content-around">
+        <div class="card-det">
             <h3>{{ props.cat.cat_name }}</h3>
-            <span class="bal">Balance: ${{ props.cat.bal / 100 }}</span>
+            <span class="bal">Balance: ${{ (props.cat.bal / 100).toFixed(2) }}</span>
         </div>
-        <div class="col-6 d-flex flex-column">
+        <div>
             <button @click="$emit('minus_pressed')" class="btn btn-outline-primary">-</button>
             <button @click="$emit('plus_pressed')" class="btn">+</button>
         </div>
@@ -20,8 +20,13 @@
 </template>
 <style scoped>
     .card {
+        width: 100%;
         border-bottom: solid 1px #fefefe;
         padding: 2em 0;
+    }
+    .card-det {
+        width: 50%;
+        text-align: left;
     }
     .cat-card:last-child {
         border-bottom: none;
